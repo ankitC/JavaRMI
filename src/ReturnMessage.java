@@ -3,16 +3,16 @@ import java.io.Serializable;
 public class ReturnMessage implements Serializable{
 
 	/*Returned for each RIM*/
-	Object returnVal;
-	boolean isException;
+	private Object returnValue;
+	private boolean isException;
 
 	public ReturnMessage(Object returnVal, boolean isException) {
 		this.isException = isException;
-		this.returnVal = returnVal;
+		this.returnValue = returnVal;
 	}
 
-	public Object getReturnVal() {
-		return returnVal;
+	public Object getReturnValue() {
+		return returnValue;
 	}
 
 	public boolean isException() {
