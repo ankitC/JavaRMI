@@ -4,6 +4,10 @@ import java.lang.reflect.Proxy;
 
 public class RemoteObjectReference implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String ipAddress;
     private int port;
     private String objectId;
@@ -56,7 +60,7 @@ public class RemoteObjectReference implements Serializable{
     public Object getStub() throws ClassNotFoundException{
     	InvocationHandler handler = new RemoteInvocationHandler(this.ipAddress,this.port,this.objectId);
 
-        Class className = Class.forName(this.remoteInterfaceName);
+        Class<?> className = Class.forName(this.remoteInterfaceName);
 
         Object proxyObject =  Proxy.newProxyInstance(
                 className.getClassLoader(),

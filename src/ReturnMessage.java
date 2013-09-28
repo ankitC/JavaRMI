@@ -2,6 +2,10 @@ import java.io.Serializable;
 
 public class ReturnMessage implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/*Returned for each RIM*/
 	private Object returnValue;
 	private boolean isException;

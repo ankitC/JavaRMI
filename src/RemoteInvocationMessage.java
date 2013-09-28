@@ -2,6 +2,10 @@ import java.io.Serializable;
 
 public class RemoteInvocationMessage implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String objectId; /*Unique for each object*/
 	private String methodName;
 	private Object[] args;
