@@ -12,12 +12,16 @@ import registry.ReturnMessage;
 
 
 public class RegistryMessenger {
-	private int registryPort;
-	private String registryHost;
+	private int registryPort = Config.getRegistryPort();
+	private String registryHost = "localhost";
 
 	public RegistryMessenger(int port, String registryHost) {
 		this.registryPort = port;
 		this.registryHost = registryHost;
+	}
+	
+	public RegistryMessenger(){
+		
 	}
 
 	public RemoteObjectReference lookup(String id) throws Exception {
