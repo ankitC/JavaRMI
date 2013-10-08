@@ -1,6 +1,7 @@
 package serverDatabases;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -11,13 +12,12 @@ public class StatesDatabase implements CapitalQueryInterface{
 	private static Map<String, State> states = new HashMap<String, State>();
 
 	public void buildStateDatabase(){
-
-		String line = null;
-
-		BufferedReader brs = new BufferedReader(new InputStreamReader(
-				CapitalDatabase.class.getClassLoader().getResourceAsStream("states.txt")));
-
 		try {
+			String line = null;
+
+			BufferedReader brs = new BufferedReader(new InputStreamReader(
+					new FileInputStream("../states.txt")));
+
 			while ((line = brs.readLine()) != null) {
 				String[] sc = line.split(":");
 				State state = new State(sc[0], sc[1]);
