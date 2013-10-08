@@ -1,8 +1,10 @@
+package serverDatabases;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+
 
 
 public class NationsDatabase {
@@ -23,9 +25,9 @@ public class NationsDatabase {
 			e.printStackTrace();
 		}
 	}
-	
-	 public String getNationCapital(String nation) {
-	        return nations.get(nation.toLowerCase());
-	    }
+
+	public String getNationCapital(String nation) {
+		return nations.get(nation.toLowerCase());
+	}
 
 }

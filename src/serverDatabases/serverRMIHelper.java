@@ -1,3 +1,5 @@
+package serverDatabases;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.InetAddress;
@@ -8,6 +10,9 @@ import java.rmi.Remote;
 import java.util.HashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import registry.RemoteInvocationMessage;
+import registry.RemoteObjectReference;
 
 public class serverRMIHelper {
 

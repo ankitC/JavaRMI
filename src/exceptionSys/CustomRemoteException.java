@@ -1,3 +1,4 @@
+package exceptionSys;
 public class CustomRemoteException extends Exception {
 
 	/**

@@ -1,3 +1,4 @@
+package registry;
 import java.io.Serializable;
 
 public class ReturnMessage implements Serializable{

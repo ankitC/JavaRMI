@@ -1,3 +1,4 @@
+package util;
 
 public class Config {
 	private static int registrySocket= 15440;

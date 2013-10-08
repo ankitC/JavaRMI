@@ -1,7 +1,15 @@
+package util;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import exceptionSys.CustomRemoteException;
+
+import registry.RegistryRequestMessage;
+import registry.RemoteObjectReference;
+import registry.ReturnMessage;
+
 
 public class RegistryMessenger {
 	private int registryPort;

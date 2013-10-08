@@ -1,6 +1,10 @@
+package registry;
 /*Format of message in which the clients communicate with the registry*/
 
+
 import java.io.Serializable;
+
+import util.Command;
 
 public class RegistryRequestMessage implements Serializable{
 	/**
