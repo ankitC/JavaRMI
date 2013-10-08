@@ -7,7 +7,7 @@ import java.util.Map;
 
 
 
-public class NationsDatabase {
+public class NationsDatabase implements CapitalQueryInterface{
 	private static Map<String, String> nations = new HashMap<String, String>();
 
 	public void buildNationsDatabase(){ 

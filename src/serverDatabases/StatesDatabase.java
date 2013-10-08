@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class StatesDatabase {
+public class StatesDatabase implements CapitalQueryInterface{
 	private static Map<String, State> states = new HashMap<String, State>();
 
 	public void buildStateDatabase(){
