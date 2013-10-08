@@ -1,6 +1,8 @@
 package serverDatabases;
 
-public class State {
+import java.io.Serializable;
+
+public class State implements Serializable {
 
 	private String name;
 	private String capital;
@@ -15,6 +17,10 @@ public class State {
 	}
 
 	public String getCapital() {
+		return capital;
+	}
+	
+	public String toString(){
 		return capital;
 	}
 }

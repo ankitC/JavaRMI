@@ -38,4 +38,10 @@ public class NationsDatabase implements CapitalQueryInterface{
 		return nations.get(nation.toLowerCase());
 	}
 
+	@Override
+	public State getStateCapital(String state) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

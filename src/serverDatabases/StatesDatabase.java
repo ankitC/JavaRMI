@@ -28,8 +28,15 @@ public class StatesDatabase implements CapitalQueryInterface{
 		}
 	}
 
-	public static State getStateCapital(String state) {
+	public State getStateCapital(String state) {
 		return states.get(state.toLowerCase());
+	}
+	
+	
+	@Override
+	public String getNationCapital(String nation) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
