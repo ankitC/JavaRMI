@@ -14,7 +14,7 @@ import util.Config;
 
 public class Registry {
 	private HashMap<String, RemoteObjectReference> objectReferenceTable;
-	private int registryPort;
+	private int registryPort = Config.getRegistryPort();
 
 	public Registry() {
 		this.objectReferenceTable = new HashMap<String, RemoteObjectReference>();
@@ -88,7 +88,7 @@ public class Registry {
 	}
 
 	public static void main(String[] args) {
-		Registry server = new Registry(Config.getRegistrySocket());
+		Registry server = new Registry(Config.getRegistryPort());
 		server.start();
 	}
 
