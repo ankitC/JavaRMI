@@ -1,4 +1,4 @@
-package registry;
+
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,6 +6,10 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+
+import registry.RegistryRequestMessage;
+import registry.RemoteObjectReference;
+import registry.ReturnMessage;
 
 import exceptionSys.CustomRemoteException;
 
@@ -26,6 +30,7 @@ public class Registry {
 	}
 
 	public void start() {
+		System.out.println("Starting the Registry...");
 		try {
 			ServerSocket inSocket = new ServerSocket(registryPort);
 			Socket outSocket = new Socket();
@@ -51,6 +56,8 @@ public class Registry {
 						if (objectReferenceTable.get(inMsg.getId()) == null) {
 							objectReferenceTable.put(inMsg.getId(), ror);
 							returnMessage = new ReturnMessage("OK", false);
+							System.out.println("Added Object "+inMsg.getId()+" to the registry");
+							
 						} else {
 							returnMessage = new ReturnMessage(
 									new CustomRemoteException("Object with id "
