@@ -9,5 +9,5 @@
 .settings/
 .classpath
 .project
-
+out/
 bin/
