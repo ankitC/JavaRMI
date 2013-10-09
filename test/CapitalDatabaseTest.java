@@ -1,4 +1,5 @@
 import org.junit.Test;
+import serverDatabases.CapitalDatabase;
 
 import static org.junit.Assert.assertEquals;
 
