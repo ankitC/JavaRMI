@@ -18,7 +18,7 @@ public class Client {
 			RemoteObjectReference localStateDBObjectReference = clientSideRegistryMessenger.lookup("StatesDb");
 			CapitalQueryInterface statesQuery = (CapitalQueryInterface) localStateDBObjectReference.getStub();
 			
-			System.out.println(countriesQuery.getNationCapital("India").toString());
+			System.out.println(countriesQuery.getNationCapital("India"));
 			System.out.println(statesQuery.getStateCapital("Ohio").toString());
 		}
 			catch (Exception e) {
