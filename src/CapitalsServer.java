@@ -1,4 +1,9 @@
-
+/*
+ * Capitals Server Class is a database of capitals of 244 countries 
+ * in the world and 50 states of United States.
+ * We export the databases to the registry for the clients 
+ * to query the server remotely by invoking native methods.
+ */
 
 import java.net.UnknownHostException;
 import registry.RemoteObjectReference;
@@ -9,19 +14,18 @@ import serverDatabases.StatesDatabase;
 import util.RegistryMessenger;
 
 public class CapitalsServer {
-	
+
 	private static ServerRMIHelper serverRMIHelper = new ServerRMIHelper();
-	
+
 	public CapitalsServer() {
-		this.serverRMIHelper=new ServerRMIHelper();
+		CapitalsServer.serverRMIHelper=new ServerRMIHelper();
 	}
 
 	public static void main(String[] args) {
-		
-		CapitalsServer ourServer = new CapitalsServer();
-		
+
 		System.out.println("Starting Server...");
 		System.out.println("Building Countries Database...");
+		/* Making the database */
 		NationsDatabase countries = new NationsDatabase();
 		countries.buildNationsDatabase();
 		System.out.println("Countries Database Initialized...");
@@ -29,38 +33,38 @@ public class CapitalsServer {
 		StatesDatabase states = new StatesDatabase();
 		states.buildStateDatabase();
 		System.out.println("States Database Initialized");
-		
-		
+
+		/* Export the object to the ServerSide Helper which acts as a skeleton*/
 		System.out.println("Exporting Objects...");
-		
+
 		try {
-			RemoteObjectReference remoteCountriesDb = serverRMIHelper.exportRemoteObject("CountriesDb", CapitalQueryInterface.class.getName(), countries);
-			RemoteObjectReference remoteStatesDb = serverRMIHelper.exportRemoteObject("StatesDb", CapitalQueryInterface.class.getName(), states);
+			RemoteObjectReference remoteCountriesDb = serverRMIHelper.createRemoteObjectReference("CountriesDb", CapitalQueryInterface.class.getName(), countries);
+			RemoteObjectReference remoteStatesDb = serverRMIHelper.createRemoteObjectReference("StatesDb", CapitalQueryInterface.class.getName(), states);
 			System.out.println("Finished exporting Objects to the RMI helper...");
+
 			System.out.println("Binding the object to the RMI...");
-			
+			/* Registering Objects with the Registry */
 			RegistryMessenger registryMessenger = new RegistryMessenger();
-			
+
 			registryMessenger.bind(remoteCountriesDb);
 			registryMessenger.bind(remoteStatesDb);
-			
+
 			System.out.println("Finished binding the object with the registry...");
 			System.out.println("Starting to service remote requests...");
+
+			/* Starting the serverSide RMI Helper which intercepts the 
+			 * remotely generated method invoke messages 
+			 */
 			serverRMIHelper.serve();
-			
-		
+
+
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Could not connect to the Registry Host!");
+			//e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Exception Occured at the Server End!! Please check!");
 		}
-		
-		
-		
-		
-		
+
 	}
 
 	public ServerRMIHelper getServerRMIHelper() {
@@ -68,7 +72,7 @@ public class CapitalsServer {
 	}
 
 	public void setServerRMIHelper(ServerRMIHelper serverRMIHelper) {
-		this.serverRMIHelper = serverRMIHelper;
+		CapitalsServer.serverRMIHelper = serverRMIHelper;
 	}
 
 }

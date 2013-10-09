@@ -3,31 +3,39 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-
-import exceptionSys.CustomRemoteException;
+import java.util.Set;
 
 import registry.RegistryRequestMessage;
 import registry.RemoteObjectReference;
 import registry.ReturnMessage;
+import exceptionSys.CustomRemoteException;
 
+/* 
+ * This is a vehicle to communicate with the registry .
+ *  It takes the commands and makes a RegistryRequestMessage out of it.
+ *  It sends this message to the Registry, and gets the return message.
+ *  Using the ReturnedMessage class, it makes sense of the returned message
+ *  and takes appropriate action.
+ */
 
 public class RegistryMessenger {
 	private int registryPort = Config.getRegistryPort();
-	private String registryHost = "localhost";
+	private String registryHost = "localhost"; //TODO:"Change to accept the location of registry"
 
 	public RegistryMessenger(int port, String registryHost) {
 		this.registryPort = port;
 		this.registryHost = registryHost;
 	}
-	
+
 	public RegistryMessenger(){
-		
+
 	}
 
-	public RemoteObjectReference lookup(String id) throws Exception {
+	/* lookup the RemoteObject with the passed ObjectID  */ 
+	public RemoteObjectReference lookup(String requestObjectid) throws Exception {
 
 		RegistryRequestMessage messageToSend = new RegistryRequestMessage(
-				Command.LOOKUP, id, null);
+				Command.LOOKUP, requestObjectid, null);
 
 		RemoteObjectReference returnedObject = null;
 		ReturnMessage returnedMessage = communicateToRegistryServer(messageToSend);
@@ -37,6 +45,7 @@ public class RegistryMessenger {
 		return returnedObject;
 	}
 
+	/* Bind the object to the registry */
 	public void bind(RemoteObjectReference objReference) throws Exception {
 		/* Bind the object to the ID on the registry */
 		RegistryRequestMessage messageToSend = new RegistryRequestMessage(
@@ -50,14 +59,31 @@ public class RegistryMessenger {
 					+ objReference.getObjectId());
 		}
 	}
+	
+	/*List out all the objects that are available with the registry */
+	public String list() throws Exception{
+		RegistryRequestMessage messageToSend = new RegistryRequestMessage(
+				Command.LIST, null, null);
+		ReturnMessage returnedMessage = communicateToRegistryServer(messageToSend);
+		if (!returnedMessage.isException()) {
+			String avList = (String) returnedMessage.getReturnValue();
+			return avList;
+		}
+		else
+			return null;
+	}
 
-	/* Helper function to communicate with the Registry Server */
+	/* 
+	 * Helper function to communicate with the Registry Server .
+	 * Marshalls the RegistryRequestMessage and then Demarshalls
+	 * the returnedMessage from the registry.
+	 */
 	private ReturnMessage communicateToRegistryServer(
 			RegistryRequestMessage message) throws Exception {
 
 		Socket sock = null;
 		ReturnMessage returnedMessage = null;
-		/*Maybe have a method to do this seperately, doing the same somewhere else as well*/
+		
 		try {
 			sock = new Socket(registryHost, registryPort);
 			ObjectOutputStream oos = new ObjectOutputStream(
@@ -77,9 +103,8 @@ public class RegistryMessenger {
 			sock.close();
 		} catch (CustomRemoteException e) {
 			throw e;
-		} catch (Exception e1) {
-			// TODO: add logic for retries?
-			throw e1;
+		} catch (Exception RegistryMessengerException) {
+			throw RegistryMessengerException;
 		} finally {
 			try {
 				if (sock != null && !sock.isClosed()) {

@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+/* Config variables for the system */
 public class Config {
 	private static int registryPort= 15440;
 	private static int serverPort = 15441;

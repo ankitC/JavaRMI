@@ -17,39 +17,29 @@ import util.Config;
 
 public class ServerRMIHelper {
 
-	private int port = Config.getServerPort(); //Default port
-	//Map to hold the mapping from
-	private HashMap<String, Remote> localRefTable;
+	private int port = Config.getServerPort(); 
+	private HashMap<String, Remote> exportedObjectReferences;
 
-	//serves requests from default port
 	public ServerRMIHelper() {
-		this.localRefTable = new HashMap<String, Remote>();
+		this.exportedObjectReferences = new HashMap<String, Remote>();
 	}
 
-	/**
-	 * Serves requests from "port" port.
-	 * @param port
-	 */
 	public ServerRMIHelper(int port) {
 		this.port = port;
-		this.localRefTable = new HashMap<String, Remote>();
+		this.exportedObjectReferences = new HashMap<String, Remote>();
 	}
 
 
-	/**
-	 * 
-	 * @param id: The id of the remote object
-	 * @param remoteInterface: The name of the remoteInterface which this object is
-	 * exposed as. Can be any one of the many remote interfaces this object implements. 
-	 * @param obj: The remote object to which this dispatcher can server requests.
-	 * @return: After registering in the local table, an ror is created and returned. 
-	 * This can be used for registering with the rmi registry.
+	/*
+	 * Creates the RemoteObjectReference which will be registered with the 
+	 * registry. The ID with which the object wants to be registred as 
+	 * and the interface to be exported to the remote client
+	 * is used to create the RemoteObjectReference. 
 	 */
-	public RemoteObjectReference exportRemoteObject(String id, String remoteInterface, Remote obj) throws UnknownHostException {
+	public RemoteObjectReference createRemoteObjectReference(String id, String remoteInterface, Remote obj) throws UnknownHostException {
 
-		this.localRefTable.put(id,obj);
+		this.exportedObjectReferences.put(id,obj);
 		String ip = InetAddress.getLocalHost().getHostAddress();
-
 		return new RemoteObjectReference(ip,this.port,id,remoteInterface);
 	}
 
@@ -77,7 +67,7 @@ public class ServerRMIHelper {
 					ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
 					RemoteInvocationMessage imsg = (RemoteInvocationMessage) ois.readObject();
 
-					Remote obj = localRefTable.get(imsg.getObjectId());
+					Remote obj = exportedObjectReferences.get(imsg.getObjectId());
 					executor.execute(new ExecutionAgent(imsg,obj,client));
 
 				} catch (IOException e) {

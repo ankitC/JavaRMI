@@ -6,11 +6,12 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/* Database of Nations and their Capitals */
 
 public class NationsDatabase implements CapitalQueryInterface{
 	private static Map<String, String> nations = new HashMap<String, String>();
 
+	/* Builds the database from the file for national capitals */
 	public void buildNationsDatabase(){
 		System.out.println("Trying to build database");
 		
@@ -29,7 +30,8 @@ public class NationsDatabase implements CapitalQueryInterface{
 			e.printStackTrace();
 		}
 	}
-
+	
+	/* Returns the name of the capital for the input nation*/
 	public String getNationCapital(String nation) {
 		return nations.get(nation.toLowerCase());
 	}

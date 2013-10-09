@@ -7,10 +7,12 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+/* Database of State and their Capitals */
 
 public class StatesDatabase implements CapitalQueryInterface{
 	private static Map<String, State> states = new HashMap<String, State>();
-
+	
+	/* Builds the database from the file for state capitals */
 	public void buildStateDatabase(){
 		try {
 			String line = null;

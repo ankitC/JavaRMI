@@ -1,5 +1,8 @@
 package serverDatabases;
-
+/* 
+ * Simple class whose objects can be exchanged between the
+ * client and the Server by remote invocation of methods. 
+ */
 import java.io.Serializable;
 
 public class State implements Serializable {
