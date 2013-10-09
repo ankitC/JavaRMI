@@ -1,14 +1,13 @@
 package util;
+import exceptionSys.CustomRemoteException;
+import registry.RegistryRequestMessage;
+import registry.RemoteObjectReference;
+import registry.ReturnMessage;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Set;
-
-import registry.RegistryRequestMessage;
-import registry.RemoteObjectReference;
-import registry.ReturnMessage;
-import exceptionSys.CustomRemoteException;
 
 /* 
  * This is a vehicle to communicate with the registry .
@@ -20,11 +19,11 @@ import exceptionSys.CustomRemoteException;
 
 public class RegistryMessenger {
 	private int registryPort = Config.getRegistryPort();
-	private String registryHost = "localhost"; //TODO:"Change to accept the location of registry"
+	private String registryAddress = Config.getRegistryAddress();
 
-	public RegistryMessenger(int port, String registryHost) {
+	public RegistryMessenger(int port, String registryAddress) {
 		this.registryPort = port;
-		this.registryHost = registryHost;
+		this.registryAddress = registryAddress;
 	}
 
 	public RegistryMessenger(){
@@ -85,7 +84,7 @@ public class RegistryMessenger {
 		ReturnMessage returnedMessage = null;
 		
 		try {
-			sock = new Socket(registryHost, registryPort);
+			sock = new Socket(registryAddress, registryPort);
 			ObjectOutputStream oos = new ObjectOutputStream(
 					sock.getOutputStream());
 			oos.writeObject(message);

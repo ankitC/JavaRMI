@@ -13,6 +13,8 @@ public class Config {
 	private static int serverPort = 15441;
 	private static int clientSocket = 15442;
 
+    private static String registryAddress = "localhost";
+
     private static Map<String, String> properties;
 
     static {
@@ -25,7 +27,7 @@ public class Config {
             brn = new BufferedReader(new InputStreamReader(
                     new FileInputStream("properties.txt")));
 
-            String line = null;
+            String line;
 
             while ((line = brn.readLine()) != null) {
                 String[] nc = line.split(":");
@@ -39,6 +41,7 @@ public class Config {
         String registryPort = getProperty("registryPort");
         String serverPort   = getProperty("serverPort");
         String clientSocket = getProperty("clientSocket");
+        String registryAddress = getProperty("registryAddress");
 
         if (registryPort != null) {
             setRegistryPort(Integer.parseInt(registryPort));
@@ -50,6 +53,10 @@ public class Config {
 
         if (clientSocket != null) {
             setClientSocket(Integer.parseInt(clientSocket));
+        }
+
+        if (registryAddress != null) {
+            setRegistryAddress(registryAddress);
         }
 
         System.out.println(stringify());
@@ -78,12 +85,19 @@ public class Config {
 	private static void setClientSocket(int clientSocket) {
 		Config.clientSocket = clientSocket;
 	}
+    public static String getRegistryAddress() {
+        return registryAddress;
+    }
+    private static void setRegistryAddress(String registryAddress) {
+        Config.registryAddress = registryAddress;
+    }
 
     public static String stringify() {
         return "Config{" +
                 "registryPort=" + registryPort +
                 ", serverPort=" + serverPort +
                 ", clientSocket=" + clientSocket +
+                ", registryAddress=" + registryAddress +
                 '}';
     }
 }
