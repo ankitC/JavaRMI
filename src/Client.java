@@ -1,3 +1,4 @@
+import exceptionSys.CapitalNotFoundException;
 import registry.RemoteObjectReference;
 import serverDatabases.CapitalQueryInterface;
 import serverDatabases.DatabaseOfDatabases;
@@ -10,8 +11,7 @@ import util.RegistryMessenger;
  */
 public class Client {
 
-	
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		RegistryMessenger clientSideRegistryMessenger =  new RegistryMessenger();
@@ -19,21 +19,28 @@ public class Client {
 			System.out.println("Listing the available Objects");
 			System.out.println("Availale Objects:"+clientSideRegistryMessenger.list());
 			System.out.println("Selecting the object from the list...");
-			
+
 			/*lookup and accept the remote reference from the registry*/
 			RemoteObjectReference localNationsDBObject = clientSideRegistryMessenger.lookup("CountriesDb");
-			
-			
-			
+
+
+
 			System.out.println("Getting Stub for countries database");
 			CapitalQueryInterface countriesQuery = (CapitalQueryInterface)localNationsDBObject.getStub();
 			System.out.println("Got Stub");
-			
-		
+
+
 			System.out.println("Querying database for capital of a country by RMI...");
 			/* Querying the databases */
-			System.out.println(countriesQuery.getCapital("India"));
-			
+
+            String country = "India";
+
+            try {
+                System.out.format("The capital of %s is %s\n", country, countriesQuery.getCapital(country));
+            } catch (CapitalNotFoundException e) {
+                System.out.format("Got an exception: %s", e.getMessage());
+            }
+
 			System.out.println("Getting the database archive from the registry....");
 			RemoteObjectReference localDatabaseArchive = clientSideRegistryMessenger.lookup("DatabaseArchive");
 			DatabaseOfDatabases databaseArchive = (DatabaseOfDatabases) localDatabaseArchive.getStub();
@@ -42,8 +49,27 @@ public class Client {
 			System.out.println("Got the database");
 			System.out.println("Making local stub for the returned reference..");
 			CapitalQueryInterface statesQuery = (CapitalQueryInterface) localStateDBObjectReference.getStub();
-			System.out.println("Querying the database for capital");
-			System.out.println(statesQuery.getCapital("Ohio").toString());
+			System.out.println("Querying the database for the capital of a valid state...");
+
+            String state = "Ohio";
+
+            try {
+                System.out.format("The capital of %s is %s\n", state, statesQuery.getCapital(state));
+            } catch (CapitalNotFoundException e) {
+                System.out.format("Got an exception: %s", e.getMessage());
+            }
+
+            System.out.println("Querying the states database for a null state (should throw exception)");
+
+            state = null;
+
+            try {
+                System.out.format("The capital of %s is %s\n", state, statesQuery.getCapital(state));
+            } catch (CapitalNotFoundException e) {
+                System.out.format("Got an exception: %s", e.getMessage());
+            }
+
+
 		}
 			catch (Exception e) {
 			// TODO Auto-generated catch block

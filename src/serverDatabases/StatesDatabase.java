@@ -1,5 +1,7 @@
 package serverDatabases;
 
+import exceptionSys.CapitalNotFoundException;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -30,11 +32,15 @@ public class StatesDatabase implements CapitalQueryInterface{
 		}
 	}
 
-	public String getCapital(String state) {
-		return states.get(state.toLowerCase()).getCapital();
-	}
-	
+    public String getCapital(String state) throws CapitalNotFoundException {
+        if (state == null) throw new CapitalNotFoundException();
 
+        String capital = states.get(state.toLowerCase()).getCapital();
+
+        if (capital == null) throw new CapitalNotFoundException();
+
+        return capital;
+    }
 }
 
 
