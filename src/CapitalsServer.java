@@ -72,7 +72,7 @@ public class CapitalsServer {
 			/* Starting the serverSide RMI Helper which intercepts the 
 			 * remotely generated method invoke messages 
 			 */
-			serverRMIHelper.rmiIncomingListener();
+			serverRMIHelper.handleRMIRequests();
 
 
 		} catch (UnknownHostException e) {

@@ -1,5 +1,9 @@
 package serverDatabases;
 
+import registry.RemoteInvocationMessage;
+import registry.RemoteObjectReference;
+import util.Config;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.InetAddress;
@@ -10,10 +14,6 @@ import java.rmi.Remote;
 import java.util.HashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
-import registry.RemoteInvocationMessage;
-import registry.RemoteObjectReference;
-import util.Config;
 
 public class ServerRMIHelper {
 
@@ -52,7 +52,7 @@ public class ServerRMIHelper {
 	 * unmarshalls the message, calls the requested method on the requested remote 
 	 * object and creates replies back to the requester with the results. 
 	 */
-	public void rmiIncomingListener() {
+	public void handleRMIRequests() {
 
 		ServerSocket serverSock = null;
 		Executor executor = Executors.newCachedThreadPool();
