@@ -20,7 +20,7 @@ public class RemoteInvocationHandler implements InvocationHandler {
     }
 
     @Override
-    public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
+    public Object invoke(Object object, Method method, Object[] objects) throws Throwable {
 
         RemoteInvocationMessage invokeMsg = new RemoteInvocationMessage(objectID,method.getName(),objects);
 
@@ -37,6 +37,7 @@ public class RemoteInvocationHandler implements InvocationHandler {
             ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
             ReturnMessage returnedMessage = (ReturnMessage)ois.readObject();
 
+            /* Get the value if the object retuned is not an exception */
             if(!returnedMessage.isException()) { 
             	returnObject = returnedMessage.getReturnValue();
             } else {
@@ -46,7 +47,7 @@ public class RemoteInvocationHandler implements InvocationHandler {
             ois.close();
             oos.close();
             sock.close();
-        } catch (Exception e){
+        } catch (Exception e){ // If exception is returned, throw an exception
             e.printStackTrace();
         }finally {
             if(sock != null) {

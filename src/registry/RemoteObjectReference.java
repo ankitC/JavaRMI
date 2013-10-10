@@ -7,7 +7,11 @@ import java.lang.reflect.Proxy;
 public class RemoteObjectReference implements Serializable{
 
 	/**
-	 * 
+	 *  Format of the proxy/remote object.
+	 *  This has the information about the Object's 
+	 *  location i.e IP/port of the server. It also 
+	 *  holds the name of the object that is exported 
+	 *  to the clients i.e it's ID.
 	 */
 	private static final long serialVersionUID = 1L;
 	private String ipAddress;

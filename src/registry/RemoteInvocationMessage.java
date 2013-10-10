@@ -4,7 +4,8 @@ import java.io.Serializable;
 public class RemoteInvocationMessage implements Serializable{
 
 	/**
-	 * 
+	 * This is the format of the invocation message that is used
+	 * to invoke the remote methods.
 	 */
 	private static final long serialVersionUID = 1L;
 	private String objectId; /*Unique for each object*/

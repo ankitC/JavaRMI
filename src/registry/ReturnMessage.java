@@ -4,7 +4,9 @@ import java.io.Serializable;
 public class ReturnMessage implements Serializable{
 
 	/**
-	 * 
+	 * Format of the return message. It holds the 
+	 * returned value and defines if it is an exception
+	 * or not.
 	 */
 	private static final long serialVersionUID = 1L;
 	/*Returned for each RIM*/
