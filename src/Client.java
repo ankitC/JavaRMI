@@ -61,12 +61,13 @@ public class Client {
 
             System.out.println("Querying the states database for a null state (should throw exception)");
 
-            state = null;
+            state = "invalid state";
 
             try {
-                System.out.format("The capital of %s is %s\n", state, statesQuery.getCapital(state));
+                String capital = statesQuery.getCapital(state);
+                System.out.println("The capital of " + state + " is " + capital);
             } catch (CapitalNotFoundException e) {
-                System.out.format("Got a CapitalNotFoundException: %s", e.getMessage());
+                System.out.format("Got a CapitalNotFoundException!");
             } catch (Exception e1) {
                 System.out.format("Got an exception: %s", e1.getMessage());
             }
