@@ -1,0 +1,81 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{mathtools}
+
+\oddsidemargin0cm
+\topmargin-2cm
+\textwidth16.5cm
+\textheight23.5cm
+
+\usepackage[cm]{fullpage}
+
+\setlength{\jot}{8pt}
+
+\newcounter{qnum}
+\setcounter{qnum}{1}
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\newcommand{\q}{\vspace{.25in} \hrule\vspace{0.5em}
+\noindent{\bf Problem \arabic{qnum}}\addtocounter{qnum}{1} \vspace{0.5em}
+\hrule \vspace{.10in}}
+
+\newcommand{\h}[1]
+                    {\vspace{.25in} \hrule\vspace{0.5em}
+                    \noindent{\bf #1 \vspace{0.5em}}
+                    \hrule \vspace{.10in}
+                    }
+
+\renewcommand{\part}[1] {\vspace{.10in} {\bf (#1)}}
+
+%\newcommand{\qed}{\hfill \mbox{\raggedright \rule{.07in}{.1in}}}
+
+\newcommand{\myname}{Vinay Balaji}
+\newcommand{\partnername}{Ankit Chheda}
+\newcommand{\myandrew}{vbalaji@andrew.cmu.edu}
+\newcommand{\partnerandrew}{achheda@andrew.cmu.edu}
+\newcommand{\myhwnum}{Project \#2}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+
+%\input{defs.tex}
+
+\begin{document}
+
+\medskip
+
+\thispagestyle{plain}
+\begin{center}                  % Center the following lines
+{\Large 15-440 \myhwnum} \\
+10 October 2013 \\
+\myname\hfill\myandrew \\
+\partnername\hfill\partnerandrew \\
+\end{center}
+
+\h{Design}
+
+The design we chose for this lab is very similar to Java's original RMI design.\\
+\\
+At least three actors are needed: a client, a server, and a registry.\\
+\\
+To begin, the registry listens for all incoming RMI requests, such as list, lookup, bind, and rebind.\\
+\\
+The server(s) registers its remote objects by going through a registry messenger, which tells the registry to register a remote object with the specified ID and stub (interface). Server methods invoked remotely can return other remote object references by either already having the remote reference in the class containing said method, or can look up the appropriate reference in the registry.\\
+\\
+The client does not query the registry directly either, but rather goes through the same messenger used by the server. Through the messenger, the client queries the registry for a list of remote object references available, and then requests one or more of them. The remote object reference returned has a method to return its stub, from which we can finally make remote method invocations.\\
+\\
+The stubs construct an invocation message to send off to the server, which then uses an execution skeleton to actually invoke the method. Th return value (or exception) is packaged into a message back to the stub, which finally provides the method's return value to the client (or throws an exception).
+
+\h{Major Design Decisions}
+
+\h{Trade-offs}
+
+\h{Problems}
+
+\end{document}
