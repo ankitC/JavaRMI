@@ -35,11 +35,11 @@ public class StatesDatabase implements CapitalQueryInterface{
     public String getCapital(String state) throws CapitalNotFoundException {
         if (state == null) throw new CapitalNotFoundException();
 
-        String capital = states.get(state.toLowerCase()).getCapital();
+        State resultState = states.get(state.toLowerCase());
 
-        if (capital == null) throw new CapitalNotFoundException();
+        if (resultState == null) throw new CapitalNotFoundException();
 
-        return capital;
+        return resultState.getCapital();
     }
 }
 
