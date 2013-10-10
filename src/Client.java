@@ -1,5 +1,6 @@
 import registry.RemoteObjectReference;
 import serverDatabases.CapitalQueryInterface;
+import serverDatabases.DatabaseOfDatabases;
 import util.RegistryMessenger;
 
 
@@ -21,17 +22,28 @@ public class Client {
 			
 			/*lookup and accept the remote reference from the registry*/
 			RemoteObjectReference localNationsDBObject = clientSideRegistryMessenger.lookup("CountriesDb");
-			RemoteObjectReference localStateDBObjectReference = clientSideRegistryMessenger.lookup("StatesDb");
 			
 			
-			System.out.println("Getting Stub");
+			
+			System.out.println("Getting Stub for countries database");
 			CapitalQueryInterface countriesQuery = (CapitalQueryInterface)localNationsDBObject.getStub();
-			CapitalQueryInterface statesQuery = (CapitalQueryInterface) localStateDBObjectReference.getStub();
 			System.out.println("Got Stub");
 			
+		
+			System.out.println("Querying database for capital of a country by RMI...");
 			/* Querying the databases */
-			System.out.println(countriesQuery.getNationCapital("India"));
-			System.out.println(statesQuery.getStateCapital("Ohio").toString());
+			System.out.println(countriesQuery.getCapital("India"));
+			
+			System.out.println("Getting the database archive from the registry....");
+			RemoteObjectReference localDatabaseArchive = clientSideRegistryMessenger.lookup("DatabaseArchive");
+			DatabaseOfDatabases databaseArchive = (DatabaseOfDatabases) localDatabaseArchive.getStub();
+			System.out.println("Getting the remote reference of states database from the database Archive...");
+			RemoteObjectReference localStateDBObjectReference = databaseArchive.getDatabase("StatesDb");
+			System.out.println("Got the database");
+			System.out.println("Making local stub for the returned reference..");
+			CapitalQueryInterface statesQuery = (CapitalQueryInterface) localStateDBObjectReference.getStub();
+			System.out.println("Querying the database for capital");
+			System.out.println(statesQuery.getCapital("Ohio").toString());
 		}
 			catch (Exception e) {
 			// TODO Auto-generated catch block

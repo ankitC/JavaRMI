@@ -8,6 +8,8 @@
 import java.net.UnknownHostException;
 import registry.RemoteObjectReference;
 import serverDatabases.CapitalQueryInterface;
+import serverDatabases.DatabaseArchive;
+import serverDatabases.DatabaseOfDatabases;
 import serverDatabases.NationsDatabase;
 import serverDatabases.ServerRMIHelper;
 import serverDatabases.StatesDatabase;
@@ -24,6 +26,8 @@ public class CapitalsServer {
 	public static void main(String[] args) {
 
 		System.out.println("Starting Server...");
+		
+		
 		System.out.println("Building Countries Database...");
 		/* Making the database */
 		NationsDatabase countries = new NationsDatabase();
@@ -33,19 +37,32 @@ public class CapitalsServer {
 		StatesDatabase states = new StatesDatabase();
 		states.buildStateDatabase();
 		System.out.println("States Database Initialized");
-
+		
+		System.out.println("Making database archive");
+		DatabaseArchive dataArchive= new DatabaseArchive();
+		
 		/* Export the object to the ServerSide Helper which acts as a skeleton*/
 		System.out.println("Exporting Objects...");
 
 		try {
-			RemoteObjectReference remoteCountriesDb = serverRMIHelper.createRemoteObjectReference("CountriesDb", CapitalQueryInterface.class.getName(), countries);
-			RemoteObjectReference remoteStatesDb = serverRMIHelper.createRemoteObjectReference("StatesDb", CapitalQueryInterface.class.getName(), states);
+			RemoteObjectReference remoteCountriesDb = serverRMIHelper.createRemoteObjectReference
+					("CountriesDb", CapitalQueryInterface.class.getName(), countries);
+			RemoteObjectReference remoteStatesDb = serverRMIHelper.createRemoteObjectReference
+					("StatesDb", CapitalQueryInterface.class.getName(), states);
+			RemoteObjectReference remoteDatabaseArchive = serverRMIHelper.createRemoteObjectReference
+					("DatabaseArchive",  DatabaseOfDatabases.class.getName(), dataArchive);
 			System.out.println("Finished exporting Objects to the RMI helper...");
+			
+			System.out.println("Adding the databases to the Archive");
+			dataArchive.addDatabaseToArchive("CountriesDb",remoteCountriesDb);
+			dataArchive.addDatabaseToArchive("StatesDb", remoteStatesDb);
 
-			System.out.println("Binding the object to the RMI...");
+
+			System.out.println("Binding the objects to the Registry...");
 			/* Registering Objects with the Registry */
 			RegistryMessenger registryMessenger = new RegistryMessenger();
-
+		
+			registryMessenger.bind(remoteDatabaseArchive);
 			registryMessenger.bind(remoteCountriesDb);
 			registryMessenger.bind(remoteStatesDb);
 
@@ -55,7 +72,7 @@ public class CapitalsServer {
 			/* Starting the serverSide RMI Helper which intercepts the 
 			 * remotely generated method invoke messages 
 			 */
-			serverRMIHelper.serve();
+			serverRMIHelper.rmiIncomingListener();
 
 
 		} catch (UnknownHostException e) {
