@@ -1,4 +1,5 @@
 package serverDatabases;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,19 +9,19 @@ import java.util.Map;
 
 /* Database of Nations and their Capitals */
 
-public class NationsDatabase implements CapitalQueryInterface{
+public class NationsDatabase implements CapitalQueryInterface {
 	private static Map<String, String> nations = new HashMap<String, String>();
 
 	/* Builds the database from the file for national capitals */
-	public void buildNationsDatabase(){
+	public void buildNationsDatabase() {
 		System.out.println("Trying to build database");
-		
+
 		BufferedReader brn;
 		try {
-			brn = new BufferedReader(new InputStreamReader(
-					new FileInputStream("nations.txt")));
-		
-		String line = null;
+			brn = new BufferedReader(new InputStreamReader(new FileInputStream(
+					"nations.txt")));
+
+			String line = null;
 
 			while ((line = brn.readLine()) != null) {
 				String[] nc = line.split(":");
@@ -30,16 +31,10 @@ public class NationsDatabase implements CapitalQueryInterface{
 			e.printStackTrace();
 		}
 	}
-	
-	/* Returns the name of the capital for the input nation*/
-	public String getNationCapital(String nation) {
-		return nations.get(nation.toLowerCase());
-	}
 
-	@Override
-	public State getStateCapital(String state) {
-		// TODO Auto-generated method stub
-		return null;
+	/* Returns the name of the capital for the input nation */
+	public String getCapital(String nation) {
+		return nations.get(nation.toLowerCase());
 	}
 
 }

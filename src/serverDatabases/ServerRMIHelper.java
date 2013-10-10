@@ -52,7 +52,7 @@ public class ServerRMIHelper {
 	 * unmarshalls the message, calls the requested method on the requested remote 
 	 * object and creates replies back to the requester with the results. 
 	 */
-	public void serve() {
+	public void rmiIncomingListener() {
 
 		ServerSocket serverSock = null;
 		Executor executor = Executors.newCachedThreadPool();
