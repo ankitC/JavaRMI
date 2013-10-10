@@ -14,7 +14,8 @@ CLASSES = \
 	registry/RemoteInvocationMessage.java \
 	registry/RemoteObjectReference.java \
 	registry/ReturnMessage.java \
-	serverDatabases/CapitalDatabase.java \
+	serverDatabases/DatabaseArchive.java \
+	serverDatabases/DatabaseOfDatabases.java \
 	serverDatabases/CapitalQueryInterface.java \
 	serverDatabases/ExecutionAgent.java \
 	serverDatabases/NationsDatabase.java \
@@ -35,7 +36,8 @@ RMCLASSES = \
 	registry/RemoteInvocationMessage.java \
 	registry/RemoteObjectReference.java \
 	registry/ReturnMessage.java \
-	serverDatabases/CapitalDatabase.java \
+	serverDatabases/DatabaseArchive.java \
+	serverDatabases/DatabaseOfDatabases.java \
 	serverDatabases/CapitalQueryInterface.java \
 	serverDatabases/ExecutionAgent.java \
 	serverDatabases/NationsDatabase.java \
