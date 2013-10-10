@@ -66,9 +66,9 @@ public class Client {
             try {
                 System.out.format("The capital of %s is %s\n", state, statesQuery.getCapital(state));
             } catch (CapitalNotFoundException e) {
-                System.out.format("Got an exception: %s", e.getMessage());
+                System.out.format("Got a CapitalNotFoundException: %s", e.getMessage());
             } catch (Exception e1) {
-                System.out.format("Got an exception: %s", e.getMessage());
+                System.out.format("Got an exception: %s", e1.getMessage());
             }
 
 
