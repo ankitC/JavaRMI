@@ -54,34 +54,40 @@ public class ServerRMIHelper {
 	 */
 	public void handleRMIRequests() {
 
-		ServerSocket serverSock = null;
 		Executor executor = Executors.newCachedThreadPool();
-		try {
-			serverSock = new ServerSocket(port);
-			String ip = InetAddress.getLocalHost().getHostAddress();
-			System.out.println(ip);
-			while(true){
-				try {
+		executor.execute(
+                new Runnable() {
+                    public void run() {
+                        ServerSocket serverSock;
+                        try {
+                            serverSock = new ServerSocket(port);
+                            String ip = InetAddress.getLocalHost().getHostAddress();
+                            System.out.println(ip);
+                            while (true) {
+                                try {
+                                    Executor executor = Executors.newCachedThreadPool();
+                                    Socket client = serverSock.accept();
+                                    ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
+                                    RemoteInvocationMessage imsg = (RemoteInvocationMessage) ois.readObject();
 
-					Socket client = serverSock.accept();
-					ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
-					RemoteInvocationMessage imsg = (RemoteInvocationMessage) ois.readObject();
+                                    Remote obj = exportedObjectReferences.get(imsg.getObjectId());
+                                    executor.execute(new ExecutionAgent(imsg, obj, client));
 
-					Remote obj = exportedObjectReferences.get(imsg.getObjectId());
-					executor.execute(new ExecutionAgent(imsg,obj,client));
-
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (ClassNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
 	}
 
 }
+
 
 

@@ -67,7 +67,7 @@ public class Client {
                 String capital = statesQuery.getCapital(state);
                 System.out.println("The capital of " + state + " is " + capital);
             } catch (CapitalNotFoundException e) {
-                System.out.format("Got a CapitalNotFoundException!");
+                System.out.format("Got a CapitalNotFoundException!\n");
             } catch (Exception e1) {
                 System.out.format("Got an exception: %s\n", e1.getMessage());
             }
