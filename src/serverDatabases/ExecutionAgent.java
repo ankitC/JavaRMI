@@ -9,6 +9,11 @@ import java.rmi.Remote;
 import registry.RemoteInvocationMessage;
 import registry.ReturnMessage;
 
+/* 
+ * The execution agent is a runnable which does the method running for the skeleton.
+ * It takes in the method invocation and communicates the result back to the calling
+ * client.
+ */
 public class ExecutionAgent implements Runnable{
 
     private RemoteInvocationMessage RemoteMessage;
@@ -21,6 +26,7 @@ public class ExecutionAgent implements Runnable{
         this.client = client;
     }
 
+    /* Execution agent calls the method as if a local invocation was happening */
     @Override
     public void run() {
 
@@ -35,7 +41,7 @@ public class ExecutionAgent implements Runnable{
             }
         }
 
-
+        /* Determine the method to invoke and get the return value */
         Method method = null;
         try {
             method = localObj.getClass().getMethod(RemoteMessage.getMethodName(),paraTypes);
@@ -48,7 +54,7 @@ public class ExecutionAgent implements Runnable{
                 hasException = true;
                 returnVal = e;
             }
-
+            /* Communicating the return value to the client */
             ReturnMessage rm = new ReturnMessage(returnVal,hasException);
 
             try{
