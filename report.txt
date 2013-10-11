@@ -41,6 +41,14 @@ The stubs are implemented as Proxy objects with our own custom RemoteInvocationH
 
 How to Run:
 
+Our example involves querying "databases" for the capitals of nations and states.
+These databases are stored in an archive, from the client requests specific databases.
+
+The archive and all of its databases have remote object references on the registry.
+
+The references to the databases can either be retrieved from the registry directly, 
+or by a method call on the archive, which returns the appropriate remote object reference.
+
 1. The first step towards getting our project up and running is to make
 some changes to the properties.txt file located in the project root.
 
@@ -64,13 +72,22 @@ Here, the parameters of interest are:
 	Server
 	Client
 
-
+4. The output should demonstrate our framework's capability to:
+	1) Register (bind) remote object references on the registry
+	2) List remote object references currently on the registry
+	3) Lookup remote object references from registry
+	4) Get local stubs for remote object references
+	5) Invoke method on stub, which can return, a value, an exception,
+	   or another remote object reference.
+	6) Propogate exceptions thrown from remote procedure call
 
 Assumptions:
 
-1. We have a distributed filesystem.
-2. The following files are located at the project root:
+1. The following file(s) are located at the execution directory of EVERY instance:
+	properties.txt
+
+2. The following file(s) are located at the execution directory of each SERVER instance:
 	nations.txt
 	states.txt
-	properties.txt
+
 3. The ports specified in the configuration file are not being used by other processes.
