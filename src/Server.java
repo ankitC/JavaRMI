@@ -11,12 +11,12 @@ import util.RegistryMessenger;
 
 import java.net.UnknownHostException;
 
-public class CapitalsServer {
+public class Server {
 
 	private static ServerRMIHelper serverRMIHelper = new ServerRMIHelper();
 
-	public CapitalsServer() {
-		CapitalsServer.serverRMIHelper=new ServerRMIHelper();
+	public Server() {
+		Server.serverRMIHelper=new ServerRMIHelper();
 	}
 
 	public static void main(String[] args) {
@@ -83,7 +83,7 @@ public class CapitalsServer {
 	}
 
 	public void setServerRMIHelper(ServerRMIHelper serverRMIHelper) {
-		CapitalsServer.serverRMIHelper = serverRMIHelper;
+		Server.serverRMIHelper = serverRMIHelper;
 	}
 
 }
