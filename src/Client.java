@@ -59,7 +59,7 @@ public class Client {
                 System.out.format("Got an exception: %s", e.getMessage());
             }
 
-            System.out.println("Querying the states database for a null state (should throw exception)");
+            System.out.println("Querying the states database for an invalid state (should throw exception)");
 
             state = "invalid state";
 
@@ -69,7 +69,7 @@ public class Client {
             } catch (CapitalNotFoundException e) {
                 System.out.format("Got a CapitalNotFoundException!");
             } catch (Exception e1) {
-                System.out.format("Got an exception: %s", e1.getMessage());
+                System.out.format("Got an exception: %s\n", e1.getMessage());
             }
 
 

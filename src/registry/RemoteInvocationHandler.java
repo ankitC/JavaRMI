@@ -48,7 +48,7 @@ public class RemoteInvocationHandler implements InvocationHandler {
             oos.close();
             sock.close();
         } catch (Exception e){ // If exception is returned, throw an exception
-            e.printStackTrace();
+            throw e.getCause();
         }finally {
             if(sock != null) {
                 try {
