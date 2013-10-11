@@ -5,15 +5,11 @@
  * to query the server remotely by invoking native methods.
  */
 
-import java.net.UnknownHostException;
 import registry.RemoteObjectReference;
-import serverDatabases.CapitalQueryInterface;
-import serverDatabases.DatabaseArchive;
-import serverDatabases.DatabaseOfDatabases;
-import serverDatabases.NationsDatabase;
-import serverDatabases.ServerRMIHelper;
-import serverDatabases.StatesDatabase;
+import serverDatabases.*;
 import util.RegistryMessenger;
+
+import java.net.UnknownHostException;
 
 public class CapitalsServer {
 
@@ -26,7 +22,11 @@ public class CapitalsServer {
 	public static void main(String[] args) {
 
 		System.out.println("Starting Server...");
-		
+
+        /* Starting the serverSide RMI Helper which intercepts the
+         * remotely generated method invoke messages
+         */
+        serverRMIHelper.handleRMIRequests();
 		
 		System.out.println("Building Countries Database...");
 		/* Making the database */
@@ -68,12 +68,6 @@ public class CapitalsServer {
 
 			System.out.println("Finished binding the object with the registry...");
 			System.out.println("Starting to service remote requests...");
-
-			/* Starting the serverSide RMI Helper which intercepts the 
-			 * remotely generated method invoke messages 
-			 */
-			serverRMIHelper.handleRMIRequests();
-
 
 		} catch (UnknownHostException e) {
 			System.out.println("Could not connect to the Registry Host!");

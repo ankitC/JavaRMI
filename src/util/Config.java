@@ -11,9 +11,9 @@ import java.util.Map;
 public class Config {
 	private static int registryPort= 15440;
 	private static int serverPort = 15441;
-	private static int clientSocket = 15442;
+	private static int clientPort = 15442;
 
-    private static String registryAddress = "localhost";
+    private static String registryIPAddress = "localhost";
 
     private static Map<String, String> properties;
 
@@ -40,8 +40,8 @@ public class Config {
 
         String registryPort = getProperty("registryPort");
         String serverPort   = getProperty("serverPort");
-        String clientSocket = getProperty("clientSocket");
-        String registryAddress = getProperty("registryAddress");
+        String clientPort = getProperty("clientPort");
+        String registryIPAddress = getProperty("registryIPAddress");
 
         if (registryPort != null) {
             setRegistryPort(Integer.parseInt(registryPort));
@@ -51,12 +51,12 @@ public class Config {
             setServerPort(Integer.parseInt(serverPort));
         }
 
-        if (clientSocket != null) {
-            setClientSocket(Integer.parseInt(clientSocket));
+        if (clientPort != null) {
+            setClientPort(Integer.parseInt(clientPort));
         }
 
-        if (registryAddress != null) {
-            setRegistryAddress(registryAddress);
+        if (registryIPAddress != null) {
+            setRegistryIPAddress(registryIPAddress);
         }
 
         System.out.println(stringify());
@@ -79,25 +79,25 @@ public class Config {
 	private static void setServerPort(int serverSocket) {
 		Config.serverPort = serverSocket;
 	}
-	public static int getClientSocket() {
-		return clientSocket;
+	public static int getClientPort() {
+		return clientPort;
 	}
-	private static void setClientSocket(int clientSocket) {
-		Config.clientSocket = clientSocket;
+	private static void setClientPort(int clientPort) {
+		Config.clientPort = clientPort;
 	}
-    public static String getRegistryAddress() {
-        return registryAddress;
+    public static String getRegistryIPAddress() {
+        return registryIPAddress;
     }
-    private static void setRegistryAddress(String registryAddress) {
-        Config.registryAddress = registryAddress;
+    private static void setRegistryIPAddress(String registryIPAddress) {
+        Config.registryIPAddress = registryIPAddress;
     }
 
     public static String stringify() {
         return "Config{" +
                 "registryPort=" + registryPort +
                 ", serverPort=" + serverPort +
-                ", clientSocket=" + clientSocket +
-                ", registryAddress=" + registryAddress +
+                ", clientPort=" + clientPort +
+                ", registryIPAddress=" + registryIPAddress +
                 '}';
     }
 }

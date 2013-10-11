@@ -1,4 +1,4 @@
 registryPort:04451
 serverPort:14451
-clientSocket:24451
-registryAddress:localhost
+clientPort:24451
+registryIPAddress:localhost

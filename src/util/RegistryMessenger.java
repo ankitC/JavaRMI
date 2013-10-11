@@ -19,11 +19,11 @@ import java.net.Socket;
 
 public class RegistryMessenger {
 	private int registryPort = Config.getRegistryPort();
-	private String registryAddress = Config.getRegistryAddress();
+	private String registryIPAddress = Config.getRegistryIPAddress();
 
-	public RegistryMessenger(int port, String registryAddress) {
+	public RegistryMessenger(int port, String registryIPAddress) {
 		this.registryPort = port;
-		this.registryAddress = registryAddress;
+		this.registryIPAddress = registryIPAddress;
 	}
 
 	public RegistryMessenger(){
@@ -84,7 +84,7 @@ public class RegistryMessenger {
 		ReturnMessage returnedMessage = null;
 		
 		try {
-			sock = new Socket(registryAddress, registryPort);
+			sock = new Socket(registryIPAddress, registryPort);
 			ObjectOutputStream oos = new ObjectOutputStream(
 					sock.getOutputStream());
 			oos.writeObject(message);
